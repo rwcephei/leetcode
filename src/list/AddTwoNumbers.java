@@ -12,23 +12,24 @@ public class AddTwoNumbers {
         ListNode p = new ListNode(0);
         ListNode q = p;
         int carry = 0;
-        while (l1 != null && l2 != null) {
-        	q.next = new ListNode((l1.val + l2.val + carry) % 10);
-        	carry = (l1.val + l2.val + carry) / 10;
-        	l1 = l1.next;
-        	l2 = l2.next;
-        	q = q.next;
-        }
         
-        ListNode l = l1 != null ? l1 : l2;
-        while (l != null) {
-        	q.next = new ListNode((l.val + carry) % 10);
-        	carry = (l.val + carry) / 10;
-        	l = l.next;
+        while (l1 != null || l2 != null || carry != 0) {
+        	int sum = carry;
+        	if (l1 != null) {
+        		sum += l1.val;
+        		l1 = l1.next;
+        	}
+        	
+        	if (l2 != null) {
+        		sum += l2.val;
+        		l2 = l2.next;
+        	}
+        	
+        	q.next = new ListNode(sum % 10);
         	q = q.next;
-        }
+        	carry = sum / 10;
+        }        
         
-        q.next = carry == 0 ? null : new ListNode(carry);
         return p.next;
     }
     
