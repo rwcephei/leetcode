@@ -1,20 +1,22 @@
 package string;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class LongestSubstringWithoutRepeatingCharacters {
 	public int lengthOfLongestSubstring(String s) {
 		int n = s.length();
 		int len = 0;
+		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		int left = 0;
+		int right = 0;
 		for (int i = 0; i < n; ++i) {
-			HashSet<Character> set = new HashSet<Character>();
-			set.add(s.charAt(i));
-			for (int j = i + 1; j < n; ++j) {
-				if (set.contains(s.charAt(j))) break;
-				set.add(s.charAt(j));
+			if (map.containsKey(s.charAt(i))) {
+				left = Math.max(map.get(s.charAt(i)) + 1, left);				
 			}
 			
-			len = Math.max(len, set.size());
+			map.put(s.charAt(i), i);
+			++right;
+			len = Math.max(len, right - left);
 		}
 		
 		return len;
@@ -27,6 +29,8 @@ public class LongestSubstringWithoutRepeatingCharacters {
 		System.out.println(l.lengthOfLongestSubstring("aa"));
 		System.out.println(l.lengthOfLongestSubstring("abcabcbb"));
 		System.out.println(l.lengthOfLongestSubstring("pwwkew"));
+		System.out.println(l.lengthOfLongestSubstring("abckjkc"));
+		System.out.println(l.lengthOfLongestSubstring("abckjklmnc"));
 	}
 
 }
