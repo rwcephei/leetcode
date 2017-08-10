@@ -1,32 +1,31 @@
 package string;
 
 public class LongestPalindromicSubstring {
+	private int low;
+	private int high;
+	private int maxLen;
+	
 	public String longestPalindrome(String s) {
 		int n = s.length();
-		String res = "";
 		for (int i = 0; i < n; ++i) {
-			int x = i;
-			int y = i;
-			while (x-1 >= 0 && y+1 < n && s.charAt(x-1) == s.charAt(y+1)) {
-				--x;
-				++y;
-			}
-			
-			String s1 = s.substring(x, y+1);
-			res = s1.length() > res.length() ? s1 : res;
-			
-			x = i + 1;
-			y = i;
-			while (x-1 >= 0 && y+1 < n && s.charAt(x-1) == s.charAt(y+1)) {
-				--x;
-				++y;
-			}
-			
-			String s2 = s.substring(x, y+1);
-			res = s2.length() > res.length() ? s2 : res;
+			getMaxLen(s, i, i, n);
+			getMaxLen(s, i+1, i, n);
+		}
+
+		return s.substring(this.low, this.high);
+	}
+	
+	private void getMaxLen(String s, int x, int y, int n) {
+		while (x-1 >= 0 && y+1 < n && s.charAt(x-1) == s.charAt(y+1)) {
+			--x;
+			++y;
 		}
 		
-		return res;
+		if (y + 1 - x > this.maxLen) {
+			this.low = x;
+			this.high = y + 1;
+			this.maxLen = this.high - this.low;
+		}
 	}
 	
 	public static void main(String[] args) {
