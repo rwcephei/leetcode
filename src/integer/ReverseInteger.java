@@ -1,4 +1,4 @@
-package bit;
+package integer;
 
 public class ReverseInteger {
 	public int reverse(int x) {
